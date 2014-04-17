@@ -94,25 +94,25 @@ class Fritzl(object):
 		
 		try:
 			from pyquery import PyQuery as pq
-		except ImportError:
-			print('ImportError: please install pyquery')
-
-		doc = pq(url=u'	%s/net/home_auto_overview.lua?sid=%s' % (
+			doc = pq(url=u'	%s/net/home_auto_overview.lua?sid=%s' % (
 					 self.__fritz_url, self.sid))
 					 
-		dev_count = doc('.zebra > tr').size()
-		
-		return_dict = {}
-		
-		for dev_id in range(2, dev_count + 1):
-			id_sel = '.zebra > tr:nth-child(%s) > td.c1 > nobr' % (
-					 dev_id)
-			name_sel = '.zebra > tr:nth-child(%s) > td.c2 > nobr' % (
-					 dev_id)
+			dev_count = doc('.zebra > tr').size()
 			
-			dev_nr = get_element(doc(id_sel)).attrib['id']
-			name = get_element(doc(name_sel)).attrib['title']
+			return_dict = {}
 			
-			return_dict[dev_nr.split('_')[1]] = name
-		
-		return return_dict
+			for dev_id in range(2, dev_count + 1):
+				id_sel = '.zebra > tr:nth-child(%s) > td.c1 > nobr' % (
+						 dev_id)
+				name_sel = '.zebra > tr:nth-child(%s) > td.c2 > nobr' % (
+						 dev_id)
+				
+				dev_nr = get_element(doc(id_sel)).attrib['id']
+				name = get_element(doc(name_sel)).attrib['title']
+				
+				return_dict[dev_nr.split('_')[1]] = name
+			
+			return return_dict
+		except ImportError:
+			print('ImportError: please install pyquery')
+			exit(0)
