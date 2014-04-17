@@ -94,7 +94,7 @@ class Fritzl(object):
 		
 		try:
 			from pyquery import PyQuery as pq
-			doc = pq(url=u'	%s/net/home_auto_overview.lua?sid=%s' % (
+			doc = pq(url=u'	%s/net/home_auto_overview.lua?sid=%s'.strip() % (
 					 self.__fritz_url, self.sid))
 					 
 			dev_count = doc('.zebra > tr').size()
