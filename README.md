@@ -1,5 +1,13 @@
-fritzl
+Fritzl
 ======
+
+[![Download format](https://pypip.in/format/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![Downloads](https://pypip.in/download/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![Egg Status](https://pypip.in/egg/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![License](https://pypip.in/license/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![Latest Version](https://pypip.in/version/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![Wheel Status](https://pypip.in/wheel/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+
 
 Control the Fritz-AVM DECT200 (switch a electric socket)
 
