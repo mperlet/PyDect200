@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='Fritzl',
-      version='0.0.4',
+      version='0.0.5',
       description='Control Fritz AVM DECT200',
       author='Mathias Perlet',
       author_email='mathias@mperlet.de',

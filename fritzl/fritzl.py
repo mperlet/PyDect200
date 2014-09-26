@@ -4,8 +4,8 @@ import hashlib, urllib, sys, urllib2, json
 class Fritzl(object):
 	
 	__fritz_url = u'http://fritz.box'
-	__lua_script = u'/net/home_auto_query.lua'
-
+	__homeswitch = u'/webservices/homeautoswitch.lua'
+	
 	def __init__(self, fritz_password):
 		self.__password = fritz_password
 		self.get_sid()
@@ -13,11 +13,12 @@ class Fritzl(object):
 		
 	def set_url(self, url):
 		self.__fritz_url = url
+
 	
-	def __lua_url_with_sid(self):
+	def __homeauto_url_with_sid(self):
 		return u'%s%s?sid=%s' % (self.__fritz_url,
-								 self.__lua_script,
-								 self.sid)
+						 self.__homeswitch,
+						 self.sid)
 
 	def get_sid(self):
 		base_url = u'%s/login_sid.lua' % self.__fritz_url
@@ -41,78 +42,61 @@ class Fritzl(object):
 		self.sid = get_sid.split('<SID>')[1].split('</SID>')[0]
 	
 	def get_info(self):
-		command = u'AllOutletStates'
-		pre = u'xhr=1&t1390731922458=nocache'
-		url = u'%s&command=%s&%s' % (self.__lua_url_with_sid(),
-									 command,pre)
-		response = json.loads(urllib2.urlopen(url).read())
-		result = {}
-		for key in response.keys():
-			if key.startswith('DeviceID'):
-				dev_number = key.split('_')[1]
-				status = response['DeviceSwitchState_%s' % dev_number]
-				result[response[key]] = status
-		return result
+		return self.get_state_all()
 
-	def switch_onoff(self, device_nr, status):
-		url = u'%s%s' % (self.__fritz_url, self.__lua_script)
-		http_header = {
-			"Origin" : self.__fritz_url,
-			"Referer": self.__lua_url_with_sid(),
-			}
-						
-		params = {
-		  'command' : 'SwitchOnOff',
-		  'id' : device_nr,
-		  'value_to_set' : status,
-		  'xhr' : '1',
-		  'sid' : self.sid,
-		}
-
-		req = urllib2.Request(url,
-							  urllib.urlencode(params),
-							  http_header)
-		return json.loads(urllib2.urlopen(req).read())
-
-	def get_power(self):
-		watts = {}
-		for device in self.get_info().keys():
-						
-			command = u'EnergyStats_10&id=%s' % device
-			pre = u'xhr=1&t1390731922458=nocache'
-			url = u'%s&command=%s&%s' % (self.__lua_url_with_sid(),
-									   command,
-									   pre)
-			response = json.loads(urllib2.urlopen(url).read())
-			watt_float = float(response['EnStats_max_value']) / 100
-			watts[device] = watt_float
-		return watts
-
-	def get_device_names(self):
-		def get_element(obj):
-			return obj.pop().getchildren().pop()
+	def switch_onoff(self, device, status):
+		if status == 1:
+			return self.switch_on(self, device)
+		else:
+			return self.switch_off(self, device)
 		
-		try:
-			from pyquery import PyQuery as pq
-			doc = pq(url=u'	%s/net/home_auto_overview.lua?sid=%s'.strip() % (
-					 self.__fritz_url, self.sid))
-					 
-			dev_count = doc('.zebra > tr').size()
-			
-			return_dict = {}
-			
-			for dev_id in range(2, dev_count + 1):
-				id_sel = '.zebra > tr:nth-child(%s) > td.c1 > nobr' % (
-						 dev_id)
-				name_sel = '.zebra > tr:nth-child(%s) > td.c2 > nobr' % (
-						 dev_id)
-				
-				dev_nr = get_element(doc(id_sel)).attrib['id']
-				name = get_element(doc(name_sel)).attrib['title']
-				
-				return_dict[dev_nr.split('_')[1]] = name
-			
-			return return_dict
-		except ImportError:
-			print('ImportError: please install pyquery')
-			exit(0)
+	def get_power(self):
+		power_dict = self.get_power_all()
+		for device in power_dict.keys():
+			print power_dict[device]
+			power_dict[device] = float(power_dict[device]) / 1000.0
+		return power_dict
+		
+	def get_device_names(self):
+		url = u'%s&switchcmd=getswitchlist' % (self.__homeauto_url_with_sid())
+		url_names = u'%s&switchcmd=getswitchname&ain=' % (self.__homeauto_url_with_sid())
+		dev_names = {}
+		devices = self.__query(url).split(',')
+		for device in devices:
+			dev_names[device] = self.__query(url_names + device)
+		return dev_names
+		
+	def get_power_single(self, device):
+		cmd = u'%s&switchcmd=getswitchpower&ain=%s' % (self.__homeauto_url_with_sid(), device)
+		return self.__query(cmd)
+	
+	def get_power_all(self):
+		power_dict = {}
+		for device in self.get_device_names().keys():
+			power_dict[device] = self.get_power_single(device)
+		return power_dict
+	
+	def switch_on(self, device):
+		cmd = u'%s&switchcmd=setswitchon&ain=%s' % (self.__homeauto_url_with_sid(), device)
+		return self.__query(cmd)
+	
+	def switch_off(self, device):
+		cmd = u'%s&switchcmd=setswitchoff&ain=%s' % (self.__homeauto_url_with_sid(), device)
+		return self.__query(cmd)
+	
+	#def switch_toggle(self, device):
+	#	cmd = u'%s&switchcmd=setswitchtoggle&ain=%s' % (self.__homeauto_url_with_sid(), device)
+	#	return self.__query(cmd)
+	
+	def get_state(self, device):
+		cmd = u'%s&switchcmd=getswitchstate&ain=%s' % (self.__homeauto_url_with_sid(), device)
+		return self.__query(cmd)
+
+	def get_state_all(self):
+		state_dict = {}
+		for device in self.get_device_names().keys():
+			state_dict[device] = self.get_state(device)
+		return state_dict
+	
+	def __query(self, url):
+		return urllib2.urlopen(url).read().replace('\n', '')
