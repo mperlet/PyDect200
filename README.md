@@ -11,6 +11,13 @@ Fritzl
 
 Control the Fritz-AVM DECT200 (switch a electric socket)
 
+### Install
+
+```
+pip install fritzl
+```
+
+
 ### Example
 
 ```

@@ -3,10 +3,11 @@
 from distutils.core import setup
 
 setup(name='Fritzl',
-      version='0.0.5',
+      version='0.0.6',
       description='Control Fritz AVM DECT200',
       author='Mathias Perlet',
       author_email='mathias@mperlet.de',
       url='https://github.com/mperlet/fritzl',
-      packages=['fritzl'],
+      packages=['Fritzl'],
+      keywords = ['avm', 'dect200', 'fritzbox', 'dect', 'switch', 'smart home'], 
      )
