@@ -14,14 +14,14 @@ Control the Fritz-AVM DECT200 (switch a electric socket)
 ### Install
 
 ```
-pip install fritzl
+pip install Fritzl
 ```
 
 
 ### Example
 
 ```
-In [1]: from Fritzl.fritzl import Fritzl
+In [1]: from Fritzl.Fritzl import Fritzl
 In [2]: f = Fritzl('fitzbox_password')
 In [3]: f.get_device_names()
 Out[3]: {'16': 'Beleuchtung', '17': 'Fernseher'}
