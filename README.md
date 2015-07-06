@@ -21,7 +21,7 @@ pip install fritzl
 ### Example
 
 ```
-In [1]: from fritzl import Fritzl
+In [1]: from Fritzl.fritzl import Fritzl
 In [2]: f = Fritzl('fitzbox_password')
 In [3]: f.get_device_names()
 Out[3]: {'16': 'Beleuchtung', '17': 'Fernseher'}

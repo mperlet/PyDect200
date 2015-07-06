@@ -53,7 +53,6 @@ class Fritzl(object):
 	def get_power(self):
 		power_dict = self.get_power_all()
 		for device in power_dict.keys():
-			print power_dict[device]
 			power_dict[device] = float(power_dict[device]) / 1000.0
 		return power_dict
 		

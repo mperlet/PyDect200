@@ -1,5 +1,5 @@
 try:
-	from fritzl.fritzl import Fritzl
+	from Fritzl.Fritzl import Fritzl
 except:
 	print(u'Fritzl is not installed!')
 	print(u'run: pip install fritzl')
