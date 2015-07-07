@@ -1,7 +1,7 @@
 import hashlib, urllib, sys, urllib2, json
 
 
-class Fritzl(object):
+class PY_DECT200(object):
 	
 	__fritz_url = u'http://fritz.box'
 	__homeswitch = u'/webservices/homeautoswitch.lua'

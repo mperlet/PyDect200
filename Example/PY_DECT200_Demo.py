@@ -1,15 +1,15 @@
 try:
-	from Fritzl.Fritzl import Fritzl
+	from PY_DECT200.PY_DECT200 import PY_DECT200
 except:
-	print(u'Fritzl is not installed!')
-	print(u'run: pip install fritzl')
+	print(u'PY_DECT200 is not installed!')
+	print(u'run: pip install PY_DECT200')
 	exit()
 import getpass
 
-print(u"Welcome to Fritzl, the Python AVM-DECT200 API")
+print(u"Welcome to PY_DECT200, the Python AVM-DECT200 API")
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
-f = Fritzl(fritzbox_pw)
+f = PY_DECT200(fritzbox_pw)
 try:
 	info = f.get_info()
 	power = f.get_power_all()
