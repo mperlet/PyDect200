@@ -3,6 +3,11 @@ import hashlib, urllib, sys, urllib2, json
 
 class PY_DECT200(object):
 	
+	__version__ = u'0.0.8'
+	__author__ = u'Mathias Perlet'
+	__author_email__ = u'mathias@mperlet.de'
+	__description__ = u'Control Fritz AVM DECT200'
+	
 	__fritz_url = u'http://fritz.box'
 	__homeswitch = u'/webservices/homeautoswitch.lua'
 	

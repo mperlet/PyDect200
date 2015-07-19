@@ -1,12 +1,10 @@
 PY_DECT200 ( renamed Fritzl-Package)
 ======
 
-[![Download format](https://pypip.in/format/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
-[![Downloads](https://pypip.in/download/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
-[![Egg Status](https://pypip.in/egg/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
-[![License](https://pypip.in/license/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
-[![Latest Version](https://pypip.in/version/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
-[![Wheel Status](https://pypip.in/wheel/Fritzl/badge.png)](https://pypi.python.org/pypi/Fritzl/)
+[![Download format](http://img.shields.io/pypi/format/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![Downloads](http://img.shields.io/pypi/dm/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![License](http://img.shields.io/pypi/l/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![Latest Version](http://img.shields.io/pypi/v/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 
 
 Control the Fritz-AVM DECT200 (switch a electric socket)
@@ -17,11 +15,18 @@ Control the Fritz-AVM DECT200 (switch a electric socket)
 pip install PY_DECT200
 ```
 
-
-### Example
+### Demo
 
 ```
-In [1]: from PY_DECT200.PY_DECT200 import PY_DECT200
+git clone git@github.com:mperlet/PY_AVMDECT200.git
+
+./PY_AVMDECT200/Example/PY_DECT200_Demo.py
+```
+
+### Example Code
+
+```
+In [1]: from PY_DECT200 import PY_DECT200
 In [2]: f = PY_DECT200('fitzbox_password')
 In [3]: f.get_device_names()
 Out[3]: {'16': 'Beleuchtung', '17': 'Fernseher'}

@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+
 try:
-	from PY_DECT200.PY_DECT200 import PY_DECT200
+	from PY_DECT200 import PY_DECT200
 except:
 	print(u'PY_DECT200 is not installed!')
 	print(u'run: pip install PY_DECT200')
