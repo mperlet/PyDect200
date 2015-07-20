@@ -1,8 +1,14 @@
+"""
+Module to Control the AVM DECT200 Socket
+"""
 from __future__ import print_function
 import hashlib, urllib2
 
-class PY_DECT200(object):
 
+class PyDect200(object):
+    """
+    Class to Control the AVM DECT200 Socket
+    """
     __version__ = u'0.0.8'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
@@ -12,20 +18,24 @@ class PY_DECT200(object):
     __homeswitch = u'/webservices/homeautoswitch.lua'
 
     def __init__(self, fritz_password):
+        """The constructor"""
         self.__password = fritz_password
         self.get_sid()
 
 
     def set_url(self, url):
+        """Set alternative url"""
         self.__fritz_url = url
 
 
     def __homeauto_url_with_sid(self):
+        """Returns formatted uri"""
         return u'%s%s?sid=%s' % (self.__fritz_url,
                                  self.__homeswitch,
                                  self.sid)
 
     def get_sid(self):
+        """Returns a valid SID"""
         base_url = u'%s/login_sid.lua' % self.__fritz_url
         get_challenge = None
         try:
@@ -52,21 +62,25 @@ class PY_DECT200(object):
         self.sid = get_sid.split('<SID>')[1].split('</SID>')[0]
 
     def get_info(self):
+        """Returns device info"""
         return self.get_state_all()
 
     def switch_onoff(self, device, status):
+        """Switch a Socket"""
         if status == 1:
             return self.switch_on(device)
         else:
             return self.switch_off(device)
 
     def get_power(self):
+        """Returns the Power in Watt"""
         power_dict = self.get_power_all()
         for device in power_dict.keys():
             power_dict[device] = float(power_dict[device]) / 1000.0
         return power_dict
 
     def get_device_names(self):
+        """Returns a Dict with devicenames"""
         url = u'%s&switchcmd=getswitchlist' % (self.__homeauto_url_with_sid())
         url_names = u'%s&switchcmd=getswitchname&ain=' % (self.__homeauto_url_with_sid())
         dev_names = {}
@@ -76,20 +90,24 @@ class PY_DECT200(object):
         return dev_names
 
     def get_power_single(self, device):
+        """Returns the power in mW for a single device"""
         cmd = u'%s&switchcmd=getswitchpower&ain=%s' % (self.__homeauto_url_with_sid(), device)
         return self.__query(cmd)
 
     def get_power_all(self):
+        """Returns the power in mW for all devices"""
         power_dict = {}
         for device in self.get_device_names().keys():
             power_dict[device] = self.get_power_single(device)
         return power_dict
 
     def switch_on(self, device):
+        """Switch device on"""
         cmd = u'%s&switchcmd=setswitchon&ain=%s' % (self.__homeauto_url_with_sid(), device)
         return self.__query(cmd)
 
     def switch_off(self, device):
+        """Switch device off"""
         cmd = u'%s&switchcmd=setswitchoff&ain=%s' % (self.__homeauto_url_with_sid(), device)
         return self.__query(cmd)
 
@@ -98,10 +116,12 @@ class PY_DECT200(object):
     #    return self.__query(cmd)
 
     def get_state(self, device):
+        """Returns the device state"""
         cmd = u'%s&switchcmd=getswitchstate&ain=%s' % (self.__homeauto_url_with_sid(), device)
         return self.__query(cmd)
 
     def get_state_all(self):
+        """Returns all device states"""
         state_dict = {}
         for device in self.get_device_names().keys():
             state_dict[device] = self.get_state(device)
@@ -109,4 +129,5 @@ class PY_DECT200(object):
 
     @classmethod
     def __query(cls, url):
+        """Reads a URL"""
         return urllib2.urlopen(url).read().replace('\n', '')
