@@ -1,10 +1,10 @@
-PY_DECT200 ( renamed Fritzl-Package)
+PyDect200
 ======
 
-[![Download format](http://img.shields.io/pypi/format/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
-[![Downloads](http://img.shields.io/pypi/dm/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
-[![License](http://img.shields.io/pypi/l/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
-[![Latest Version](http://img.shields.io/pypi/v/PY_DECT200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![Download format](http://img.shields.io/pypi/format/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![Downloads](http://img.shields.io/pypi/dm/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![License](http://img.shields.io/pypi/l/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
+[![Latest Version](http://img.shields.io/pypi/v/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 
 
 Control the Fritz-AVM DECT200 (switch a electric socket)
@@ -12,22 +12,22 @@ Control the Fritz-AVM DECT200 (switch a electric socket)
 ### Install
 
 ```
-pip install PY_DECT200
+pip install PyDect200
 ```
 
 ### Demo
 
 ```
-git clone git@github.com:mperlet/PY_AVMDECT200.git
+git clone git@github.com:mperlet/PyDect200.git
 
-./PY_AVMDECT200/Example/PY_DECT200_Demo.py
+./PyDect200/Example/PyDect200_Demo.py
 ```
 
 ### Example Code
 
 ```
-In [1]: from PY_DECT200 import PY_DECT200
-In [2]: f = PY_DECT200('fitzbox_password')
+In [1]: from PyDect200 import PyDect200
+In [2]: f = PyDect200('fitzbox_password')
 In [3]: f.get_device_names()
 Out[3]: {'16': 'Beleuchtung', '17': 'Fernseher'}
 In [4]: f.get_info()
