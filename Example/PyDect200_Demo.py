@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 try:
-	from PY_DECT200 import PY_DECT200
+	from PyDect200 import PyDect200
 except:
-	print(u'PY_DECT200 is not installed!')
-	print(u'run: pip install PY_DECT200')
+	print(u'PyDect200 is not installed!')
+	print(u'run: pip install PyDect200')
 	exit()
 import getpass
 
-print(u"Welcome to PY_DECT200, the Python AVM-DECT200 API")
+print(u"Welcome to PyDect200, the Python AVM-DECT200 API")
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
 f = PY_DECT200(fritzbox_pw)
