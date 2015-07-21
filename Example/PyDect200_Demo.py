@@ -11,7 +11,7 @@ import getpass
 print(u"Welcome to PyDect200, the Python AVM-DECT200 API")
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
-f = PY_DECT200(fritzbox_pw)
+f = PyDect200(fritzbox_pw)
 try:
 	info = f.get_info()
 	power = f.get_power_all()
