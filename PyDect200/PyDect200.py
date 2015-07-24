@@ -9,7 +9,7 @@ class PyDect200(object):
     """
     Class to Control the AVM DECT200 Socket
     """
-    __version__ = u'0.0.10'
+    __version__ = u'0.0.11'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
     __description__ = u'Control Fritz AVM DECT200'
@@ -110,6 +110,11 @@ class PyDect200(object):
     def get_power_single(self, device):
         """Returns the power in mW for a single device"""
         return self.__query_cmd('getswitchpower', device)
+
+    def get_energy_single(self, device):
+        """Returns the energy in kwh for a single device"""
+        return self.__query_cmd('getswitchenergy', device)
+
 
     def get_power_all(self):
         """Returns the power in mW for all devices"""
