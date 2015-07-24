@@ -28,5 +28,9 @@ for dev_id in info.keys():
         print(u"Device State:        %s" % ('ON' if info.get(dev_id) == '1' else 'OFF'))
         print(u"Device Power:        %sW" % (float(power.get(dev_id)) / 1000))
         print(u"Device Power:        %sWh" % (f.get_energy_single(dev_id)))
-        print(u"Device Temperature: (%s/10)\u2103" % (f.get_temperature_single(dev_id)))
+        temp = f.get_temperature_single(dev_id)
+        try:
+                print(u"Device Temperature: (%s/10)\u2103".encode("utf-8") % (temp))
+        except:
+                print(u"Device Temperature: (%s/10) Grad Celsius" % (temp))
         print(u'')
