@@ -1,3 +1,5 @@
+# -- coding: utf-8 --
+
 """
 Module to Control the AVM DECT200 Socket
 """
@@ -9,7 +11,7 @@ class PyDect200(object):
     """
     Class to Control the AVM DECT200 Socket
     """
-    __version__ = u'0.0.11'
+    __version__ = u'0.0.12'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
     __description__ = u'Control Fritz AVM DECT200'
@@ -37,7 +39,18 @@ class PyDect200(object):
     @classmethod
     def __query(cls, url):
         """Reads a URL"""
-        return urllib2.urlopen(url).read().replace('\n', '')
+        try:
+            return urllib2.urlopen(url).read().replace('\n', '')
+        except urllib2.HTTPError as exception:
+            print('HTTPError = ' + str(exception.code))
+        except urllib2.URLError as  exception:
+            print('URLError = ' + str(exception.reason))
+        except Exception as exception:
+            print('generic exception: ' + str(exception))
+            raise
+        return "NOT DEFINED"
+
+
 
     def __query_cmd(self, command, device=None):
         """Calls a command"""
@@ -112,9 +125,12 @@ class PyDect200(object):
         return self.__query_cmd('getswitchpower', device)
 
     def get_energy_single(self, device):
-        """Returns the energy in kwh for a single device"""
+        """Returns the energy in Wh for a single device"""
         return self.__query_cmd('getswitchenergy', device)
 
+    def get_temperature_single(self, device):
+        """Returns the temperature in 0.1 °C for a single device"""
+        return self.__query_cmd('gettemperature', device)
 
     def get_power_all(self):
         """Returns the power in mW for all devices"""
