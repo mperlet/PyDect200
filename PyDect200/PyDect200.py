@@ -11,7 +11,7 @@ class PyDect200(object):
     """
     Class to Control the AVM DECT200 Socket
     """
-    __version__ = u'0.0.12'
+    __version__ = u'0.0.13'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
     __description__ = u'Control Fritz AVM DECT200'
@@ -93,10 +93,21 @@ class PyDect200(object):
 
     def switch_onoff(self, device, status):
         """Switch a Socket"""
-        if status == 1 or status:
+        if status == 1 or status == True or status == '1':
             return self.switch_on(device)
         else:
             return self.switch_off(device)
+
+    def switch_toggle(self, device):
+        """Toggles the current state of the given device"""
+        state = self.get_state(device)
+        if(state == '1'):
+            return self.switch_off(device)
+
+        elif(state == '0'):
+            return self.switch_on(device)
+        else:
+            return state
 
     def get_power(self):
         """Returns the Power in Watt"""
