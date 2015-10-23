@@ -3,14 +3,20 @@
 """
 Module to Control the AVM DECT200 Socket
 """
-from __future__ import print_function
-import hashlib, urllib2, sys
+
+from __future__ import (absolute_import, division,
+                        print_function, unicode_literals)
+import hashlib, sys
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 
 class PyDect200(object):
     """
     Class to Control the AVM DECT200 Socket
     """
-    __version__ = u'0.0.13'
+    __version__ = u'0.0.14'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
     __description__ = u'Control Fritz AVM DECT200'
@@ -41,7 +47,7 @@ class PyDect200(object):
     def __query(cls, url):
         """Reads a URL"""
         try:
-            return urllib2.urlopen(url).read().replace('\n', '')
+            return urllib2.urlopen(url).read().decode('utf-8').replace('\n', '')
         except urllib2.HTTPError:
             _, exception, _ = sys.exc_info()
             if cls.__debug:
@@ -73,7 +79,7 @@ class PyDect200(object):
         base_url = u'%s/login_sid.lua' % self.__fritz_url
         get_challenge = None
         try:
-            get_challenge = urllib2.urlopen(base_url).read()
+            get_challenge = urllib2.urlopen(base_url).read().decode('ascii')
         except urllib2.HTTPError as exception:
             print('HTTPError = ' + str(exception.code))
         except urllib2.URLError as  exception:
@@ -86,13 +92,13 @@ class PyDect200(object):
         challenge = get_challenge.split(
             '<Challenge>')[1].split('</Challenge>')[0]
         challenge_b = (
-            challenge + '-' + self.__password).decode('iso-8859-1').encode('utf-16le')
+            challenge + '-' + self.__password).encode().decode('iso-8859-1').encode('utf-16le')
 
         md5hash = hashlib.md5()
         md5hash.update(challenge_b)
 
         response_b = challenge + '-' + md5hash.hexdigest().lower()
-        get_sid = urllib2.urlopen('%s?response=%s' % (base_url, response_b)).read()
+        get_sid = urllib2.urlopen('%s?response=%s' % (base_url, response_b)).read().decode('utf-8')
         self.sid = get_sid.split('<SID>')[1].split('</SID>')[0]
 
     def get_info(self):

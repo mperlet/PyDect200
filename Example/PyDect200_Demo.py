@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -- coding: utf-8 --
+from __future__ import (absolute_import, division,
+                        print_function, unicode_literals)
 
 try:
         from PyDect200 import PyDect200
@@ -9,6 +11,10 @@ except:
         exit()
 import getpass
 
+try:
+    PyDect200.__version__
+except:
+    PyDect200 = PyDect200.PyDect200
 
 print(u"Welcome to PyDect200 v%s, the Python AVM-DECT200 API" % PyDect200.__version__)
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
@@ -27,9 +33,11 @@ for dev_id in info.keys():
         print(u"Device ID:           %s" % dev_id)
         dev_name = names.get(dev_id)
         try:
-            print(u"Device Name:         %s" % dev_name.decode('utf-8'))
+            print(u"Device Name:         %s" % dev_name)
         except:
-            print(u"Device Name:         %s" % unicode(dev_name, errors='ignore'))
+            print(u"Device Name:         %s" % dev_name.encode('utf-8').decode('utf-8', 'ignore'))
+
+
         print(u"Device State:        %s" % ('ON' if info.get(dev_id) == '1' else 'OFF'))
         dev_power = power.get(dev_id)
         if dev_power.isdigit():

@@ -45,6 +45,15 @@ Out[6]: {u'16': 68.95, u'17': 0.0}
 
 ### Tested with
 
-* Python2.7
+* Python2.7 / Python3.4
 * Fritzbox 7270
 * FRITZ!OS: 06.05
+* AVM Dect200
+
+******************
+
+* Python2.7
+* Fritzbox 7490
+* FRITZ!OS: 6.36 Labor
+* Dect200
+* PowerLine 546E
