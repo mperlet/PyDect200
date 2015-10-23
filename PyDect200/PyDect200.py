@@ -4,8 +4,7 @@
 Module to Control the AVM DECT200 Socket
 """
 from __future__ import print_function
-import hashlib, urllib2
-
+import hashlib, urllib2, sys
 
 class PyDect200(object):
     """
@@ -43,13 +42,16 @@ class PyDect200(object):
         """Reads a URL"""
         try:
             return urllib2.urlopen(url).read().replace('\n', '')
-        except urllib2.HTTPError as exception:
+        except urllib2.HTTPError:
+            _, exception, _ = sys.exc_info()
             if cls.__debug:
                 print('HTTPError = ' + str(exception.code))
-        except urllib2.URLError as  exception:
+        except urllib2.URLError:
+            _, exception, _ = sys.exc_info()
             if cls.__debug:
                 print('URLError = ' + str(exception.reason))
-        except Exception as exception:
+        except Exception:
+            _, exception, _ = sys.exc_info()
             if cls.__debug:
                 print('generic exception: ' + str(exception))
                 raise
