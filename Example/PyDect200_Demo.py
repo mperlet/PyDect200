@@ -2,7 +2,7 @@
 # -- coding: utf-8 --
 
 try:
-        from PyDect200.PyDect200 import PyDect200
+        from PyDect200 import PyDect200
 except:
         print(u'PyDect200 is not installed!')
         print(u'run: pip install PyDect200')
@@ -25,7 +25,11 @@ except Exception:
 print(u'')
 for dev_id in info.keys():
         print(u"Device ID:           %s" % dev_id)
-        print(u"Device Name:         %s" % names.get(dev_id).decode('utf-8'))
+        dev_name = names.get(dev_id)
+        try:
+            print(u"Device Name:         %s" % dev_name.decode('utf-8'))
+        except:
+            print(u"Device Name:         %s" % unicode(dev_name, errors='ignore'))
         print(u"Device State:        %s" % ('ON' if info.get(dev_id) == '1' else 'OFF'))
         dev_power = power.get(dev_id)
         if dev_power.isdigit():
