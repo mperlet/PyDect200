@@ -8,6 +8,7 @@ PyDect200
 
 
 Control the Fritz-AVM DECT200 (switch a electric socket)
+and Fritz-AVM PowerLine 546E
 
 ### Install
 
@@ -41,3 +42,9 @@ Out[5]:
 In [6]: f.get_power()
 Out[6]: {u'16': 68.95, u'17': 0.0}
 ```
+
+### Tested with
+
+* Python2.7
+* Fritzbox 7270
+* FRITZ!OS: 06.05
