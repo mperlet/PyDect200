@@ -2,16 +2,14 @@
 # -- coding: utf-8 --
 
 try:
-        from PyDect200 import PyDect200
+        from PyDect200.PyDect200 import PyDect200
 except:
         print(u'PyDect200 is not installed!')
         print(u'run: pip install PyDect200')
         exit()
 import getpass
-import sys
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+
 print(u"Welcome to PyDect200 v%s, the Python AVM-DECT200 API" % PyDect200.__version__)
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
@@ -27,7 +25,7 @@ except Exception:
 print(u'')
 for dev_id in info.keys():
         print(u"Device ID:           %s" % dev_id)
-        print(u"Device Name:         %s" % names.get(dev_id))
+        print(u"Device Name:         %s" % names.get(dev_id).decode('utf-8'))
         print(u"Device State:        %s" % ('ON' if info.get(dev_id) == '1' else 'OFF'))
         dev_power = power.get(dev_id)
         if dev_power.isdigit():
