@@ -26,11 +26,10 @@ for dev_id in info.keys():
         print(u"Device ID:           %s" % dev_id)
         print(u"Device Name:         %s" % names.get(dev_id))
         print(u"Device State:        %s" % ('ON' if info.get(dev_id) == '1' else 'OFF'))
-        print(u"Device Power:        %sW" % (float(power.get(dev_id)) / 1000))
-        print(u"Device Power:        %sWh" % (f.get_energy_single(dev_id)))
-        temp = f.get_temperature_single(dev_id)
-        try:
-                print(u"Device Temperature: (%s/10)\u2103".encode("utf-8") % (temp))
-        except:
-                print(u"Device Temperature: (%s/10) Grad Celsius" % (temp))
+        dev_power = power.get(dev_id)
+        if dev_power.isdigit():
+            dev_power = float(dev_power) / 1000
+        print(u"Device Power:        %sW" % dev_power)
+        print(u"Device Energy:       %sWh" % f.get_energy_single(dev_id))
+        print(u"Device Temperature:  %s degree Celsius  " % (f.get_temperature_single(dev_id)))
         print(u'')

@@ -19,6 +19,8 @@ class PyDect200(object):
     __fritz_url = u'http://fritz.box'
     __homeswitch = u'/webservices/homeautoswitch.lua'
 
+    __debug = False
+
     def __init__(self, fritz_password):
         """The constructor"""
         self.__password = fritz_password
@@ -42,13 +44,17 @@ class PyDect200(object):
         try:
             return urllib2.urlopen(url).read().replace('\n', '')
         except urllib2.HTTPError as exception:
-            print('HTTPError = ' + str(exception.code))
+            if cls.__debug:
+                print('HTTPError = ' + str(exception.code))
         except urllib2.URLError as  exception:
-            print('URLError = ' + str(exception.reason))
+            if cls.__debug:
+                print('URLError = ' + str(exception.reason))
         except Exception as exception:
-            print('generic exception: ' + str(exception))
-            raise
-        return "NOT DEFINED"
+            if cls.__debug:
+                print('generic exception: ' + str(exception))
+                raise
+            pass
+        return "inval"
 
 
 
@@ -141,7 +147,10 @@ class PyDect200(object):
 
     def get_temperature_single(self, device):
         """Returns the temperature in 0.1 °C for a single device"""
-        return self.__query_cmd('gettemperature', device)
+        temp_str = self.__query_cmd('gettemperature', device)
+        if temp_str.isdigit():
+            return float(temp_str) / 10.0
+        return 'inval'
 
     def get_power_all(self):
         """Returns the power in mW for all devices"""
