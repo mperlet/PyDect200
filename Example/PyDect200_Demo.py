@@ -8,7 +8,10 @@ except:
         print(u'run: pip install PyDect200')
         exit()
 import getpass
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf8')
 print(u"Welcome to PyDect200 v%s, the Python AVM-DECT200 API" % PyDect200.__version__)
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
@@ -17,7 +20,7 @@ try:
         info = f.get_info()
         power = f.get_power_all()
         names = f.get_device_names()
-except Exception, e:
+except Exception:
     print(u'HTTP-Error, wrong password?')
     exit()
 
