@@ -156,7 +156,7 @@ class PyDect200(object):
     def get_temperature_single(self, device):
         """Returns the temperature in 0.1 °C for a single device"""
         temp_str = self.__query_cmd('gettemperature', device)
-        if temp_str.isdigit():
+        if temp_str.lstrip('-').isdigit():
             return float(temp_str) / 10.0
         return 'inval'
 
