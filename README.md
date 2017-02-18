@@ -1,7 +1,7 @@
 PyDect200
 ======
 
-![pylint Score](http://www.mperlet.de/pybadge/badges/9.04.svg)
+![pylint Score](https://mperlet.github.io/pybadge/badges/9.04.svg)
 [![Download format](http://img.shields.io/pypi/format/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 [![Downloads](http://img.shields.io/pypi/dm/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 [![License](http://img.shields.io/pypi/l/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
