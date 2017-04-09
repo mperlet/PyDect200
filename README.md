@@ -19,6 +19,14 @@ pip install PyDect200
 
 ### Demo
 
+#### Demo (Github Style)
+
+```
+curl https://raw.githubusercontent.com/mperlet/PyDect200/master/Example/PyDect200_Demo.py | python
+```
+
+#### Demo (git clone)
+
 ```
 git clone git@github.com:mperlet/PyDect200.git
 
