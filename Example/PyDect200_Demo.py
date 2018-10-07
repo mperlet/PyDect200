@@ -17,9 +17,15 @@ except:
     PyDect200 = PyDect200.PyDect200
 
 print(u"Welcome to PyDect200 v%s, the Python AVM-DECT200 API" % PyDect200.__version__)
+fritzbox_username = getpass.getpass(prompt='Please insert your fritzbox username (press enter to skip): ', stream=None)
 fritzbox_pw = getpass.getpass(prompt='Please insert your fritzbox-password: ', stream=None)
 print(u'Thank you, please wait few seconds...')
-f = PyDect200(fritzbox_pw)
+f = PyDect200(fritzbox_pw, username=fritzbox_username)
+
+if not f.login_ok():
+    print("Login Not Successful, Wrong Password?")
+    exit(1)
+
 try:
         info = f.get_info()
         power = f.get_power_all()
