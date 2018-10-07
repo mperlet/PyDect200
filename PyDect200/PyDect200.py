@@ -16,26 +16,35 @@ class PyDect200(object):
     """
     Class to Control the AVM DECT200 Socket
     """
-    __version__ = u'0.0.15'
+    __version__ = u'0.0.16'
     __author__ = u'Mathias Perlet'
     __author_email__ = u'mathias@mperlet.de'
     __description__ = u'Control Fritz AVM DECT200'
 
     __fritz_url = u'http://fritz.box'
     __homeswitch = u'/webservices/homeautoswitch.lua'
+    __username_query = u''
 
     __debug = False
 
-    def __init__(self, fritz_password):
+    def __init__(self, fritz_password, username = u''):
         """The constructor"""
         self.__password = fritz_password
+        if username != u'':
+            self.__username_query = u'username=%s&' % username
         self.get_sid()
-
 
     def set_url(self, url):
         """Set alternative url"""
         self.__fritz_url = url
 
+    def login_ok(self):
+        """Returns True for a valid session id"""
+        return self.sid is not None and self.sid != u'0000000000000000'
+
+    def set_debug(self, enable=True):
+        """Enables some debug prints"""
+        self.__debug = enable
 
     def __homeauto_url_with_sid(self):
         """Returns formatted uri"""
@@ -68,11 +77,17 @@ class PyDect200(object):
 
     def __query_cmd(self, command, device=None):
         """Calls a command"""
-        url = u'%s&switchcmd=%s' % (self.__homeauto_url_with_sid(), command)
+        base_url = u'%s&switchcmd=%s' % (self.__homeauto_url_with_sid(), command)
+
         if device is None:
-            return self.__query(url)
+            url = base_url
         else:
-            return self.__query('%s&ain=%s' % (url, device))
+            url = '%s&ain=%s' % (base_url, device)
+
+        if self.__debug:
+            print(u'Query Command URI: ' + url)
+
+        return self.__query(url)
 
     def get_sid(self):
         """Returns a valid SID"""
@@ -98,7 +113,7 @@ class PyDect200(object):
         md5hash.update(challenge_b)
 
         response_b = challenge + '-' + md5hash.hexdigest().lower()
-        get_sid = urllib2.urlopen('%s?response=%s' % (base_url, response_b)).read().decode('utf-8')
+        get_sid = urllib2.urlopen('%s?%sresponse=%s' % (base_url, self.__username_query, response_b)).read().decode('utf-8')
         self.sid = get_sid.split('<SID>')[1].split('</SID>')[0]
 
     def get_info(self):
