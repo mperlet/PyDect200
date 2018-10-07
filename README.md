@@ -1,7 +1,7 @@
 PyDect200
 ======
 
-![pylint Score](https://mperlet.github.io/pybadge/badges/9.04.svg)
+![pylint Score](https://mperlet.github.io/pybadge/badges/9.12.svg)
 [![Download format](http://img.shields.io/pypi/format/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 [![Downloads](http://img.shields.io/pypi/dm/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
 [![License](http://img.shields.io/pypi/l/PyDect200.svg)](https://pypi.python.org/pypi/PY_DECT200/)
@@ -36,20 +36,24 @@ git clone git@github.com:mperlet/PyDect200.git
 ### Example Code
 
 ```
-In [1]: from PyDect200 import PyDect200
-In [2]: f = PyDect200('fitzbox_password')
-In [3]: f.get_device_names()
-Out[3]: {'16': 'Beleuchtung', '17': 'Fernseher'}
-In [4]: f.get_info()
-Out[4]: {u'16': u'0', u'17': u'0'}
-In [5]: f.switch_onoff(16,1)
-Out[5]:
-		{u'DeviceID': u'16',
-		 u'RequestResult': u'1',
-		 u'Value': u'0',
-		 u'ValueToSet': u'1'}
-In [6]: f.get_power()
-Out[6]: {u'16': 68.95, u'17': 0.0}
+from PyDect200 import PyDect200
+f = PyDect200('fitzbox_password')
+# or with username PyDect200('fritzbox_password', username='fritzbox_username')
+
+f.get_device_names()
+# {'16': 'Beleuchtung', '17': 'Fernseher'}
+
+f.get_info()
+# {u'16': u'0', u'17': u'0'}
+
+f.switch_onoff(16,1)
+#		{u'DeviceID': u'16',
+#		 u'RequestResult': u'1',
+#		 u'Value': u'0',
+#		 u'ValueToSet': u'1'}
+
+f.get_power()
+# {u'16': 68.95, u'17': 0.0}
 ```
 
 ### Tested with
