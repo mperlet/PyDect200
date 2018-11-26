@@ -15,7 +15,7 @@ matrix:
       dist: xenial
       sudo: true
 install:
-  - pip install --user codecov
+  - conda install -c conda-forge codecov
 after_success:
   - codecov
 
